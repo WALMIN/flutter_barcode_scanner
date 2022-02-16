@@ -32,7 +32,6 @@ import io.flutter.plugin.common.PluginRegistry.ActivityResultListener;
 import io.flutter.plugin.common.EventChannel.StreamHandler;
 import io.flutter.embedding.engine.plugins.lifecycle.FlutterLifecycleAdapter;
 
-
 /**
  * FlutterBarcodeScannerPlugin
  */
@@ -46,8 +45,10 @@ public class FlutterBarcodeScannerPlugin implements MethodCallHandler, ActivityR
     private static final String TAG = FlutterBarcodeScannerPlugin.class.getSimpleName();
     private static final int RC_BARCODE_CAPTURE = 9001;
     public static String lineColor = "";
+    public static boolean isShowSwitchIcon = false;
     public static boolean isShowFlashIcon = false;
     public static boolean isContinuousScan = false;
+    public static boolean frontCamera = false;
     static EventChannel.EventSink barcodeStream;
     private EventChannel eventChannel;
 
@@ -99,6 +100,7 @@ public class FlutterBarcodeScannerPlugin implements MethodCallHandler, ActivityR
                 }
                 arguments = (Map<String, Object>) call.arguments;
                 lineColor = (String) arguments.get("lineColor");
+                isShowSwitchIcon = (boolean) arguments.get("isShowSwitchIcon");
                 isShowFlashIcon = (boolean) arguments.get("isShowFlashIcon");
                 if (null == lineColor || lineColor.equalsIgnoreCase("")) {
                     lineColor = "#DC143C";
@@ -114,6 +116,7 @@ public class FlutterBarcodeScannerPlugin implements MethodCallHandler, ActivityR
                 }
 
                 isContinuousScan = (boolean) arguments.get("isContinuousScan");
+                frontCamera = (boolean) arguments.get("frontCamera");
 
                 startBarcodeScannerActivityView((String) arguments.get("cancelButtonText"), isContinuousScan);
             }

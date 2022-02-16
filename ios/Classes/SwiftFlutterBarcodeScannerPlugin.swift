@@ -17,9 +17,11 @@ public class SwiftFlutterBarcodeScannerPlugin: NSObject, FlutterPlugin, ScanBarc
     public static var viewController = UIViewController()
     public static var lineColor:String=""
     public static var cancelButtonText:String=""
+    public static var isShowSwitchIcon:Bool=false
     public static var isShowFlashIcon:Bool=false
     var pendingResult:FlutterResult!
     public static var isContinuousScan:Bool=false
+    public static var frontCamera:Bool=false
     static var barcodeStream:FlutterEventSink?=nil
     public static var scanMode = ScanMode.QR.index
     
@@ -67,6 +69,11 @@ public class SwiftFlutterBarcodeScannerPlugin: NSObject, FlutterPlugin, ScanBarc
         }else {
             SwiftFlutterBarcodeScannerPlugin.cancelButtonText = "Cancel"
         }
+        if let switchStatus = args["isShowSwitchIcon"] as? Bool{
+            SwiftFlutterBarcodeScannerPlugin.isShowSwitchIcon = switchStatus
+        }else {
+            SwiftFlutterBarcodeScannerPlugin.isShowSwitchIcon = false
+        }
         if let flashStatus = args["isShowFlashIcon"] as? Bool{
             SwiftFlutterBarcodeScannerPlugin.isShowFlashIcon = flashStatus
         }else {
@@ -76,6 +83,11 @@ public class SwiftFlutterBarcodeScannerPlugin: NSObject, FlutterPlugin, ScanBarc
             SwiftFlutterBarcodeScannerPlugin.isContinuousScan = isContinuousScan
         }else {
             SwiftFlutterBarcodeScannerPlugin.isContinuousScan = false
+        }
+        if let cameraStatus = args["frontCamera"] as? Bool{
+            SwiftFlutterBarcodeScannerPlugin.frontCamera = cameraStatus
+        }else {
+            SwiftFlutterBarcodeScannerPlugin.frontCamera = false
         }
         
         if let scanModeReceived = args["scanMode"] as? Int {
@@ -252,10 +264,10 @@ class BarcodeScannerViewController: UIViewController {
     }
     
     
-    // Inititlize components
+    // Initialize components
     func initBarcodeComponents(){
         
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: SwiftFlutterBarcodeScannerPlugin.frontCamera ? .front : .back)
         // Get the back-facing camera for capturing videos
         guard let captureDevice = deviceDiscoverySession.devices.first else {
             print("Failed to get the camera device")
@@ -342,15 +354,21 @@ class BarcodeScannerViewController: UIViewController {
             self.view.bringSubviewToFront(qrCodeFrameView)
             qrCodeFrameView.layer.insertSublayer(fillLayer, below: videoPreviewLayer!)
             self.view.bringSubviewToFront(bottomView)
+
+            self.view.bringSubviewToFront(switchCameraButton)
+            if(!SwiftFlutterBarcodeScannerPlugin.isShowSwitchIcon){
+                switchCameraButton.isHidden=true
+            }
+
             self.view.bringSubviewToFront(flashIcon)
             if(!SwiftFlutterBarcodeScannerPlugin.isShowFlashIcon){
                 flashIcon.isHidden=true
             }
+
             qrCodeFrameView.layoutIfNeeded()
             qrCodeFrameView.layoutSubviews()
             qrCodeFrameView.setNeedsUpdateConstraints()
             self.view.bringSubviewToFront(cancelButton)
-            self.view.bringSubviewToFront(switchCameraButton)
         }
         setConstraintsForControls()
         self.drawLine()

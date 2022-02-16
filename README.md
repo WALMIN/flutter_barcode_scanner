@@ -58,11 +58,13 @@ To do that open the Xcode and add camera usage description in `Info.plist`.
 ```
 
 
-After making the changes in Android ans iOS add flutter_barcode_scanner to `pubspec.yaml`
+After making the changes in Android and iOS add flutter_barcode_scanner to `pubspec.yaml`
 ```  
 dependencies:
-  ...
-  flutter_barcode_scanner: ^2.0.0
+    ...
+    flutter_barcode_scanner:
+        git:
+            url: https://github.com/WALMIN/flutter_barcode_scanner
 ```
 
 ### One time scan
@@ -78,7 +80,8 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 ```
 String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
                                                     COLOR_CODE, 
-                                                    CANCEL_BUTTON_TEXT, 
+                                                    CANCEL_BUTTON_TEXT,
+                                                    isShowSwitchIcon, 
                                                     isShowFlashIcon, 
                                                     scanMode);
 ```
@@ -88,7 +91,9 @@ Here in `scanBarcode`,
  `COLOR_CODE` is hex-color which is the color of line in barcode overlay you can pass color of your choice,
  
  `CANCEL_BUTTON_TEXT` is a text of cancel button on screen you can pass text of your choice and language,
- 
+
+ `isShowSwitchIcon` is bool value used to show or hide the switch camera icon,
+
  `isShowFlashIcon` is bool value used to show or hide the flash icon,
  
  `scanMode` is a enum in which user can pass any of `{ QR, BARCODE, DEFAULT }`, if nothing is passed it will consider a default value which will be `QR`.
@@ -103,7 +108,7 @@ e.g.
 
 
 ```
-FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", false, ScanMode.DEFAULT)
+FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", true, false, ScanMode.DEFAULT)
          .listen((barcode) { 
          /// barcode to be used
          });
