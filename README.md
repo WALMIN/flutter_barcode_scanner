@@ -8,7 +8,7 @@ A plugin for Flutter apps that adds barcode scanning support on both Android and
 
 
 ## Try example
-Just clone or download the repository, open the project in `Android Studio/ VS Code`, open `pubspec.yaml` and click on `Packages get`.
+Just clone or download the repository, open the project in `Android Studio/VS Code`, open `pubspec.yaml` and click on `Packages get`.
 Connect device and hit `run`. 
 To run on iPhone you need to run from Xcode first time and just make `pod install` in `example/ios` then run from Xcode.
 
@@ -83,18 +83,21 @@ String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
                                                     CANCEL_BUTTON_TEXT,
                                                     isShowSwitchIcon, 
                                                     isShowFlashIcon, 
+                                                    frontCamera, 
                                                     scanMode);
 ```
 
 Here in `scanBarcode`,
 
- `COLOR_CODE` is hex-color which is the color of line in barcode overlay you can pass color of your choice,
+ `COLOR_CODE` is hex-color which is the color of line in barcode overlay, you can pass any color of your choice,
  
- `CANCEL_BUTTON_TEXT` is a text of cancel button on screen you can pass text of your choice and language,
+ `CANCEL_BUTTON_TEXT` is a the text of the cancel button on screen, you can pass any text of your choice and language,
 
- `isShowSwitchIcon` is bool value used to show or hide the switch camera icon,
+ `isShowSwitchIcon` is a bool value used to show or hide the switch camera icon,
 
- `isShowFlashIcon` is bool value used to show or hide the flash icon,
+ `isShowFlashIcon` is a bool value used to show or hide the flash icon,
+ 
+ `frontCamera` is a bool value used to decide if scan should start with front or back camera,
  
  `scanMode` is a enum in which user can pass any of `{ QR, BARCODE, DEFAULT }`, if nothing is passed it will consider a default value which will be `QR`.
  It shows the graphics overlay like for barcode and QR.
@@ -108,7 +111,7 @@ e.g.
 
 
 ```
-FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", true, false, ScanMode.DEFAULT)
+FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", true, false, false, ScanMode.DEFAULT)
          .listen((barcode) { 
          /// barcode to be used
          });
