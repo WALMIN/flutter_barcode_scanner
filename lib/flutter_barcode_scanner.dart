@@ -20,11 +20,13 @@ class FlutterBarcodeScanner {
 
   /// Scan with the camera until a barcode is identified, then return.
   ///
+  /// Show a message at the top with [title].
   /// Shows a scan line with [lineColor] over a scan window. A camera switch icon is
   /// displayed if [isShowSwitchIcon] is true. A flash icon is
   /// displayed if [isShowFlashIcon] is true. The text of the cancel button can
   /// be customized with the [cancelButtonText] string.
   static Future<String> scanBarcode(
+      String title,
       String lineColor,
       String cancelButtonText,
       bool isShowSwitchIcon,
@@ -37,6 +39,7 @@ class FlutterBarcodeScanner {
 
     // Pass params to the plugin
     Map params = <String, dynamic>{
+      'title': title,
       'lineColor': lineColor,
       'cancelButtonText': cancelButtonText,
       'isShowSwitchIcon': isShowSwitchIcon,
@@ -55,12 +58,14 @@ class FlutterBarcodeScanner {
   /// Returns a continuous stream of barcode scans until the user cancels the
   /// operation.
   ///
+  /// Show a message at the top with [title].
   /// Shows a scan line with [lineColor] over a scan window. A camera switch icon is
   /// displayed if [isShowSwitchIcon] is true. A flash icon is
   /// displayed if [isShowFlashIcon] is true. The text of the cancel button can
   /// be customized with the [cancelButtonText] string. Returns a stream of
   /// detected barcode strings.
   static Stream? getBarcodeStreamReceiver(
+      String title,
       String lineColor,
       String cancelButtonText,
       bool isShowSwitchIcon,
@@ -73,6 +78,7 @@ class FlutterBarcodeScanner {
 
     // Pass params to the plugin
     Map params = <String, dynamic>{
+      'title': title,
       'lineColor': lineColor,
       'cancelButtonText': cancelButtonText,
       'isShowSwitchIcon': isShowSwitchIcon,

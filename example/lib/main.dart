@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('scanQRSimple()',
           '#ff6666', 'Cancel', false, false, true, ScanMode.QR);
       print(barcodeScanRes);
     } on PlatformException {
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> startBarcodeScanStream() async {
-    FlutterBarcodeScanner.getBarcodeStreamReceiver(
+    FlutterBarcodeScanner.getBarcodeStreamReceiver('startBarcodeScanStream()',
             '#ff6666', 'Cancel', true, true, false, ScanMode.BARCODE)!
         .listen((barcode) => print(barcode));
   }
@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, true, false, ScanMode.QR);
+          'scanQR()', '#ff6666', 'Cancel', true, true, false, ScanMode.QR);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
@@ -73,7 +73,13 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, true, false, ScanMode.BARCODE);
+          'scanBarcodeNormal()',
+          '#ff6666',
+          'Cancel',
+          true,
+          true,
+          false,
+          ScanMode.BARCODE);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
@@ -113,7 +119,8 @@ class _MyAppState extends State<MyApp> {
                         ElevatedButton(
                             onPressed: () => scanQRSimple(),
                             child: Text(
-                                'Start QR scan with front camera & without switch/flash')),
+                                'Start QR scan with front camera\n& without switch/flash',
+                                textAlign: TextAlign.center)),
                         Text('Scan result : $_scanBarcode\n',
                             style: TextStyle(fontSize: 20))
                       ]));
