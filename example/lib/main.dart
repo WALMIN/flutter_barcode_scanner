@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          'scanQR()', '#ff6666', 'Cancel', true, true, false, ScanMode.QR);
+          '', '#ff6666', 'Cancel', true, true, false, ScanMode.QR);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
