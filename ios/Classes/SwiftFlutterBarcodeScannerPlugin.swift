@@ -263,6 +263,7 @@ class BarcodeScannerViewController: UIViewController {
         super.viewDidLoad()
         self.isOrientationPortrait = isLandscape
         self.initUIComponents()
+        self.edgesForExtendedLayout = []
     }
     
     override public func viewWillAppear(_ animated: Bool) {
@@ -413,14 +414,14 @@ class BarcodeScannerViewController: UIViewController {
         self.view.addSubview(topView)
         topView.addSubview(titleLabel)
         
-        topView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
+        topView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         topView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         topView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         topView.widthAnchor.constraint(equalToConstant: UIApplication.shared.statusBarFrame.width).isActive=true
-        topView.heightAnchor.constraint(equalToConstant: 32.0).isActive=true
+        topView.heightAnchor.constraint(equalToConstant: UIApplication.shared.statusBarFrame.height + 32).isActive=true
         
         titleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: topView.centerYAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
         
         self.view.addSubview(bottomView)
         self.view.addSubview(cancelButton)
