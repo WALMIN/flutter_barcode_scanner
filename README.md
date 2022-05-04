@@ -79,6 +79,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
     
 ```
 String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+                                                    TITLE,
                                                     COLOR_CODE, 
                                                     CANCEL_BUTTON_TEXT,
                                                     isShowSwitchIcon, 
@@ -88,6 +89,8 @@ String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
 ```
 
 Here in `scanBarcode`,
+
+ `TITLE` is a the text of the title on screen, you can pass an empty string for no title or any text of your choice and language,
 
  `COLOR_CODE` is hex-color which is the color of line in barcode overlay, you can pass any color of your choice,
  
@@ -111,7 +114,7 @@ e.g.
 
 
 ```
-FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", true, false, false, ScanMode.DEFAULT)
+FlutterBarcodeScanner.getBarcodeStreamReceiver("Continuous scan", "#ff6666", "Cancel", true, false, false, ScanMode.DEFAULT)
          .listen((barcode) { 
          /// barcode to be used
          });
